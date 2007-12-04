@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Documents and Settings\blevinsn\My Documents\Visual Studio 2005\Projects\Helpdesk\HelpdeskModuleTests\bin\Debug\HelpdeskModuleTests.dll" total="30" failures="0" not-run="0" date="2007-12-04" time="09:37:39">
+  <environment nunit-version="2.4.4.0" clr-version="2.0.50727.1433" os-version="Microsoft Windows NT 5.1.2600 Service Pack 2" platform="Win32NT" cwd="C:\Program Files\NUnit 2.4.4\bin" machine-name="DEV--00" user="blevinsn" user-domain="SWORPS" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite name="C:\Documents and Settings\blevinsn\My Documents\Visual Studio 2005\Projects\Helpdesk\HelpdeskModuleTests\bin\Debug\HelpdeskModuleTests.dll" success="True" time="14.063" asserts="0">
+    <results>
+      <test-suite name="HelpdeskModuleTests" success="True" time="14.063" asserts="0">
+        <results>
+          <test-suite name="AbstractDaoTest" success="True" time="0.000" asserts="0">
+            <results />
+          </test-suite>
+          <test-suite name="AssignmentTest" success="True" time="6.484" asserts="0">
+            <results>
+              <test-case name="HelpdeskModuleTests.AssignmentTest.CreateAssignmentTest" executed="True" success="True" time="5.594" asserts="2">
+                <categories>
+                  <category name="Assignment Tests" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.AssignmentTest.GetAssignmentsByTicketIdTest" executed="True" success="True" time="0.125" asserts="11">
+                <categories>
+                  <category name="Assignment Tests" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.AssignmentTest.GetAssignmentsByUserAndActiveTest" executed="True" success="True" time="0.234" asserts="11">
+                <categories>
+                  <category name="Assignment Tests" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.AssignmentTest.GetAssignmentsByUserTest" executed="True" success="True" time="0.031" asserts="11">
+                <categories>
+                  <category name="Assignment Tests" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.AssignmentTest.UpdateAssignmentTest" executed="True" success="True" time="0.016" asserts="2">
+                <categories>
+                  <category name="Assignment Tests" />
+                </categories>
+              </test-case>
+            </results>
+          </test-suite>
+          <test-suite name="ChargeCodeTest" success="True" time="0.313" asserts="0">
+            <results>
+              <test-case name="HelpdeskModuleTests.ChargeCodeTest.CreateModuleTest" executed="True" success="True" time="0.203" asserts="2">
+                <categories>
+                  <category name="ChargeCode Tests" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.ChargeCodeTest.EditModuleTest" executed="True" success="True" time="0.031" asserts="2">
+                <categories>
+                  <category name="ChargeCode Tests" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.ChargeCodeTest.GetAllChargeCodeTest" executed="True" success="True" time="0.031" asserts="10">
+                <categories>
+                  <category name="ChargeCode Test" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.ChargeCodeTest.GetChargeCodeByActiveTest" executed="True" success="True" time="0.031" asserts="11">
+                <categories>
+                  <category name="ChargeCode Test" />
+                </categories>
+              </test-case>
+            </results>
+          </test-suite>
+          <test-suite name="RequestorTest" success="True" time="0.094" asserts="0">
+            <results>
+              <test-case name="HelpdeskModuleTests.RequestorTest.CreateRequestorTest" executed="True" success="True" time="0.047" asserts="2">
+                <categories>
+                  <category name="Requestor Test" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.RequestorTest.EditRequestorTest" executed="True" success="True" time="0.016" asserts="2">
+                <categories>
+                  <category name="Requestor Test" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.RequestorTest.GetAllRequestorTest" executed="True" success="True" time="0.031" asserts="10">
+                <categories>
+                  <category name="Requestor Test" />
+                </categories>
+              </test-case>
+            </results>
+          </test-suite>
+          <test-suite name="TicketCategoryTest" success="True" time="0.078" asserts="0">
+            <results>
+              <test-case name="HelpdeskModuleTests.TicketCategoryTest.CreateCategoryTest" executed="True" success="True" time="0.031" asserts="2">
+                <categories>
+                  <category name="Category Test" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.TicketCategoryTest.EditCategoryTest" executed="True" success="True" time="0.016" asserts="2">
+                <categories>
+                  <category name="Category Test" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.TicketCategoryTest.GetAllCategoryTest" executed="True" success="True" time="0.031" asserts="10">
+                <categories>
+                  <category name="Category Test" />
+                </categories>
+              </test-case>
+            </results>
+          </test-suite>
+          <test-suite name="TicketModuleTest" success="True" time="0.094" asserts="0">
+            <results>
+              <test-case name="HelpdeskModuleTests.TicketModuleTest.CreateModuleTest" executed="True" success="True" time="0.016" asserts="2">
+                <categories>
+                  <category name="Module Tests" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.TicketModuleTest.EditModuleTest" executed="True" success="True" time="0.016" asserts="2">
+                <categories>
+                  <category name="Module Tests" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.TicketModuleTest.GetAllModulesTest" executed="True" success="True" time="0.031" asserts="10">
+                <categories>
+                  <category name="Module Test" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.TicketModuleTest.GetModulesByQueueIdTest" executed="True" success="True" time="0.031" asserts="11">
+                <categories>
+                  <category name="Module Test" />
+                </categories>
+              </test-case>
+            </results>
+          </test-suite>
+          <test-suite name="TicketQueueTest" success="True" time="0.156" asserts="0">
+            <results>
+              <test-case name="HelpdeskModuleTests.TicketQueueTest.CreateQueueTest" executed="True" success="True" time="0.031" asserts="2">
+                <categories>
+                  <category name="QueueTest" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.TicketQueueTest.DeleteQueueTest" executed="True" success="True" time="0.016" asserts="2">
+                <categories>
+                  <category name="QueueTest" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.TicketQueueTest.GetAllEnabledQueuesTest" executed="True" success="True" time="0.047" asserts="1">
+                <categories>
+                  <category name="QueueTest" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.TicketQueueTest.GetAllQueuesTest" executed="True" success="True" time="0.031" asserts="1">
+                <categories>
+                  <category name="QueueTest" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.TicketQueueTest.UpdateQueueTest" executed="True" success="True" time="0.031" asserts="2">
+                <categories>
+                  <category name="QueueTest" />
+                </categories>
+              </test-case>
+            </results>
+          </test-suite>
+          <test-suite name="TicketStatusTest" success="True" time="6.750" asserts="0">
+            <results>
+              <test-case name="HelpdeskModuleTests.TicketStatusTest.CreateStatusTest" executed="True" success="True" time="0.500" asserts="2">
+                <categories>
+                  <category name="Status Tests" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.TicketStatusTest.EditStatusTest" executed="True" success="True" time="0.188" asserts="2">
+                <categories>
+                  <category name="Status Tests" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.TicketStatusTest.GetAllStatusTest" executed="True" success="True" time="2.125" asserts="10">
+                <categories>
+                  <category name="Status Test" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.TicketStatusTest.SortOnMiddleRequestedOrder" executed="True" success="True" time="3.719" asserts="1">
+                <categories>
+                  <category name="Status Test" />
+                </categories>
+              </test-case>
+              <test-case name="HelpdeskModuleTests.TicketStatusTest.SortOnTooLargeRequestedOrder" executed="True" success="True" time="0.141" asserts="1">
+                <categories>
+                  <category name="Status Test" />
+                </categories>
+              </test-case>
+            </results>
+          </test-suite>
+          <test-suite name="TicketTest" success="True" time="0.031" asserts="0">
+            <results>
+              <test-case name="HelpdeskModuleTests.TicketTest.CreateTicketTest" executed="True" success="True" time="0.031" asserts="2">
+                <categories>
+                  <category name="Ticket Test" />
+                </categories>
+              </test-case>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

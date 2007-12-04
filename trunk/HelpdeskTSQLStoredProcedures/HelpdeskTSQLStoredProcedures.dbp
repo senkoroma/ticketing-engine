@@ -1,0 +1,17 @@
+# Microsoft Developer Studio Project File - Database Project
+Begin DataProject = "HelpdeskTSQLStoredProcedures"
+   MSDTVersion = "80"
+   DefDBRef = "dev--00\devsql.Helpdesk.dbo"
+   Begin Folder = "Change Scripts"
+   End
+   Begin Folder = "Create Scripts"
+      Script = "SortTable.sql"
+   End
+   Begin DBRefFolder = "Database References"
+      Begin DBRefNode = "dev--00\devsql.Helpdesk.dbo"
+         ConnectStr = "Data Source=localhost\devsql;Initial Catalog=Helpdesk;Integrated Security=True"
+         Provider = "{91510608-8809-4020-8897-FBA057E22D54}"
+         Colorizer = 6
+      End
+   End
+End
