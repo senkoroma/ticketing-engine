@@ -46,14 +46,6 @@ namespace HelpdeskModule
 			set { _CreationDate = value; }
 		}
 
-		private TicketCollection _Tickets;
-
-		public TicketCollection Tickets
-		{
-			get { return _Tickets; }
-			set { _Tickets = value; }
-		}
-
 		private bool _IsActive;
 
 		public bool IsActive
@@ -64,12 +56,38 @@ namespace HelpdeskModule
 
 		#endregion
 
+		#region  ---------------  Constructors  ---------------
+
 		/// <summary>
 		/// Empty constructor for basic work.
 		/// </summary>
 		public TicketQueue()
 		{
 		}
+
+		/// <summary>
+		/// Loads a blank instance of the object, applying the supplied id.
+		/// </summary>
+		public TicketQueue(int QueueId)
+		{
+			_QueueId = QueueId;
+		}
+
+		public TicketQueue(int QueueId, string uCreator, string uDescription, string uName,
+			DateTime uCreationDate, bool uIsActive)
+		{
+			_QueueId = QueueId;
+			_Description = uDescription;
+			_IsActive = uIsActive;
+			_Name = uName;
+			_CreationDate = uCreationDate;
+			_Creator = uCreator;
+		}
+
+
+
+
+		#endregion
 
 		#region IEquatable<TicketQueue> Members
 

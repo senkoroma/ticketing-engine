@@ -1,0 +1,84 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Main.master.cs" Inherits="Main" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+	<title></title>
+	<asp:ContentPlaceHolder ID="head" runat="server">
+	</asp:ContentPlaceHolder>
+	<asp:Literal ID="ClockJavascript" runat="server" />
+</head>
+<body onload="js_clock()">
+	<form id="form1" runat="server">
+	
+	<asp:ScriptManager ID="ScriptManager1" runat="server">
+	</asp:ScriptManager>
+
+	<div id="wrapper">
+		<div id="header">
+			<div style="float: right; padding: 15px;">
+				<div style="">
+					Welcome Nathan Blevins - <a href="">Log Out</a></div>
+				<div id="js_clock" style="text-align: right;">
+				</div>
+			</div>
+			<h1>
+				<span class="green">Res</span>Queue v1.0</h1>
+		</div>
+		<div id="nav">
+			<ul>
+				<li id="active"><a href="#">Main</a></li>
+				<li><a href="#">Reports</a></li>
+				<li><a href="#">Settings</a></li>
+				<li><a href="#">Administration</a></li>
+				<li><a href="#">Personalization</a></li>
+				<li><a href="#">Help</a></li>
+			</ul>
+		</div>
+		<div id="sidebar">
+			<h2>
+				HMIS</h2>
+			<ul>
+				<li><a href="#">New Tickets: 5</a></li>
+				<li><a href="#">Unresolved Tickets: 21</a></li>
+				<li><a href="#">Tickets Assigned to You: 2</a></li>
+				<li><a href="#">Total to Date: 23023</a></li>
+			</ul>
+			<h2>
+				SAM</h2>
+			<ul>
+				<li><a href="#">New Tickets: 5</a></li>
+				<li><a href="#">Unresolved Tickets: 21</a></li>
+				<li><a href="#">Tickets Assigned to You: 2</a></li>
+				<li><a href="#">Total to Date: 23023</a></li>
+			</ul>
+			<h2>
+				Stars</h2>
+			<ul>
+				<li><a href="#">New Tickets: 5</a></li>
+				<li><a href="#">Unresolved Tickets: 21</a></li>
+				<li><a href="#">Tickets Assigned to You: 2</a></li>
+				<li><a href="#">Total to Date: 23023</a></li>
+			</ul>
+			<h2>
+				Head Start</h2>
+			<ul>
+				<li><a href="#">New Tickets: 5</a></li>
+				<li><a href="#">Unresolved Tickets: 21</a></li>
+				<li><a href="#">Tickets Assigned to You: 2</a></li>
+				<li><a href="#">Total to Date: 23023</a></li>
+			</ul>
+			<br />
+		</div>
+		<div id="content">
+
+		<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+		</asp:ContentPlaceHolder>
+		
+		</div>
+		<div id="footer">
+			SWORPS Ticketing Engine</div>
+	</div>
+	</form>
+</body>
+</html>

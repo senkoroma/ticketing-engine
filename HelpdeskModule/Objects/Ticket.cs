@@ -12,7 +12,7 @@ namespace HelpdeskModule
 	/// <summary>
 	/// Class the represetns a Ticket within the Ticketing system.  
 	/// </summary>
-	public class Ticket
+	public class Ticket : IEquatable<Ticket>
 	{
 		#region ---------------  Fields and Properties  ---------------
 
@@ -105,6 +105,22 @@ namespace HelpdeskModule
 			set { _Priority = value; }
 		}
 
+		private TicketQueue _queue;
+
+		public TicketQueue Queue
+		{
+			get { return _queue; }
+			set { _queue = value; }
+		}
+
+		private Company _company;
+
+		public Company Company
+		{
+			get { return _company; }
+			set { _company = value; }
+		}
+
 
 
 		#endregion
@@ -116,5 +132,24 @@ namespace HelpdeskModule
 		{
 
 		}
+
+		#region IEquatable<Ticket> Members
+
+		public bool Equals(Ticket other)
+		{
+			return 
+				other.Status.TicketStatusId == Status.TicketStatusId &&
+				other.Requestor.RequestorId == Requestor.RequestorId &&
+				other.Queue.QueueId == Queue.QueueId &&
+				other.Priority == Priority &&
+				other.Module.TicketModuleId == Module.TicketModuleId &&
+				other.DueDate.ToShortDateString() == DueDate.ToShortDateString() &&
+				other.Description == Description &&
+				other.Creator == Creator &&
+				other.CreationDate.ToShortDateString() == CreationDate.ToShortDateString() &&
+				other.Category.TicketCategoryId == Category.TicketCategoryId;
+		}
+
+		#endregion
 	}
 }

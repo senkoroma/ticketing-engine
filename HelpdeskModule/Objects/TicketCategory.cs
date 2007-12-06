@@ -61,6 +61,9 @@ namespace HelpdeskModule
 
 		#endregion
 
+		#region  ---------------  Constructors  ---------------
+
+
 		public TicketCategory() { }
 
 		/// <summary>
@@ -68,6 +71,18 @@ namespace HelpdeskModule
 		/// </summary>
 		/// <param name="TicketCategoryId"></param>
 		public TicketCategory(int uTicketCategoryId) { _TicketCategoryId = uTicketCategoryId; }
+
+		public TicketCategory(int uTicketCategoryId, string uName, string uDescription,
+			bool uIsActive, int uQueueId)
+		{
+			_TicketCategoryId = uTicketCategoryId;
+			_Description = uDescription;
+			_IsActive = uIsActive;
+			_Name = uName;
+			_QueueId = uQueueId;
+		}
+
+		#endregion
 
 	}
 

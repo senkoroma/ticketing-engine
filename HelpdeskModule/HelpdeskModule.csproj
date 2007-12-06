@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0B164CF7-7788-4AB5-9A60-C76E4B45C25E}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -44,6 +44,7 @@
     <Compile Include="DAL\HelpdeskService.cs" />
     <Compile Include="DAL\SQLHelpdeskProvider.cs" />
     <Compile Include="Objects\Assignment.cs" />
+    <Compile Include="Objects\Company.cs" />
     <Compile Include="Objects\TicketChargeCode.cs" />
     <Compile Include="Objects\TicketPriority.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

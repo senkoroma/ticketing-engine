@@ -55,6 +55,9 @@ namespace HelpdeskModule
 
 		#endregion
 
+		#region  ---------------  Constructors  ---------------
+
+
 		/// <summary>
 		/// Basic constructor.
 		/// </summary>
@@ -70,6 +73,18 @@ namespace HelpdeskModule
 		{
 			_RequestorId = uRequestorId;
 		}
+
+		public Requestor(int uRequestorId, string uFirstName, 
+			string uLastName, string uContactNumber, string uEmail)
+		{
+			_RequestorId = uRequestorId;
+			_FirstName = uFirstName;
+			_LastName = uLastName;
+			_ContactNumber = uContactNumber;
+			_Email = uEmail;
+		}
+
+		#endregion
 
 		#region IEquatable<Requestor> Members
 
