@@ -7,7 +7,7 @@ namespace HelpdeskModule
 {
 	public class TicketResponseCollection : List<TicketResponse> { }
 
-    public class TicketResponse
+    public class TicketResponse : IEquatable<TicketResponse>
 	{
 		#region ---------------  Fields and Properties  ---------------
 
@@ -52,6 +52,19 @@ namespace HelpdeskModule
 		{
 			get { return _MinsSpent; }
 			set { _MinsSpent = value; }
+		}
+
+		#endregion
+
+		#region IEquatable<TicketResponse> Members
+
+		public bool Equals(TicketResponse other)
+		{
+			return other.CreationDate.ToShortDateString() == CreationDate.ToShortDateString() &&
+				other.Creator == Creator &&
+				other.MinsSpent == MinsSpent &&
+				other.Response == Response &&
+				other.TicketId == TicketId;
 		}
 
 		#endregion

@@ -37,9 +37,11 @@ namespace HelpdeskModule
 
 		public abstract void DeleteTicket(int TicketId);
 
-		public abstract TicketCollection GetTicketsByQueueId(int QueueId);
+		public abstract TicketCollection GetTicketsByQueueId(int QueueId, bool IsBasicOnly);
 
 		public abstract TicketCollection GetTicketsByAssignment(string user);
+
+		public abstract Ticket MergeTickets(int MasterTicketId, int SubordinateTicketId);
 
 		#endregion
 
@@ -135,6 +137,16 @@ namespace HelpdeskModule
 		public abstract TicketChargeCodeCollection GetAllChargeCode();
 
 		public abstract TicketChargeCodeCollection GetAllChargeCodeByActive(bool IsActive);
+
+		#endregion
+
+		#region ------------- Company  -------------
+
+		public abstract void CreateCompany(Company company);
+
+		public abstract void UpdateCompany(Company company);
+
+		public abstract Company GetCompanyById(int CompanyId);
 
 		#endregion
 	}

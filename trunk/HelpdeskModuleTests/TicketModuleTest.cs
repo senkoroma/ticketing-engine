@@ -53,6 +53,15 @@ namespace HelpdeskModuleTests
 		{
 		}
 
+
+		/// <summary>
+		/// This method tears down the test itself.  This is called by the abstract class's 
+		/// [TestFixtureTearDown] method.  Transaction.Dispose() is always called in the abstract class's method.
+		/// </summary>
+		protected override void Cleanup()
+		{
+		}
+
 		#endregion
 
 		[Test]
@@ -143,12 +152,5 @@ namespace HelpdeskModuleTests
 
 		}
 
-		/// <summary>
-		/// This method tears down the test itself.  This is called by the abstract class's 
-		/// [TestFixtureTearDown] method.  Transaction.Dispose() is always called in the abstract class's method.
-		/// </summary>
-		protected override void Cleanup()
-		{
-		}
 	}
 }

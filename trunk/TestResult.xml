@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\Helpdesk NuUnit.nunit" total="1" failures="1" not-run="0" date="2007-12-04" time="12:47:54">
+  <environment nunit-version="2.4.4.0" clr-version="2.0.50727.1433" os-version="Microsoft Windows NT 5.1.2600 Service Pack 2" platform="Win32NT" cwd="C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModuleTests\bin\Debug" machine-name="DEV--00" user="blevinsn" user-domain="SWORPS" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite name="C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\Helpdesk NuUnit.nunit" success="False" time="1.672" asserts="0">
+    <results>
+      <test-suite name="C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModuleTests\bin\Debug\HelpdeskModuleTests.dll" success="False" time="1.672" asserts="0">
+        <results>
+          <test-suite name="HelpdeskModuleTests" success="False" time="1.672" asserts="0">
+            <results>
+              <test-suite name="TicketTest" success="False" time="1.641" asserts="0">
+                <results>
+                  <test-case name="HelpdeskModuleTests.TicketTest.CreateTicketTest" executed="True" success="False" time="1.391" asserts="0">
+                    <categories>
+                      <category name="Ticket Test" />
+                    </categories>
+                    <failure>
+                      <message><![CDATA[System.Data.SqlClient.SqlException : Cannot insert the value NULL into column 'queue_id', table 'Helpdesk.dbo.Ticket'; column does not allow nulls. INSERT fails.
+The statement has been terminated.]]></message>
+                      <stack-trace><![CDATA[   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj)
+   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)
+   at System.Data.SqlClient.SqlDataReader.ConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, DbAsyncResult result)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   at HelpdeskModule.DBHelper.ExecScalarSQL(String Statement, SqlParameter[] Params, CommandType SQLCommandType) in C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModule\DAL\DBHelper.cs:line 88
+   at HelpdeskModule.SQLHelpdeskProvider.CreateTicket(Ticket ticket) in C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModule\DAL\SQLHelpdeskProvider.cs:line 184
+   at HelpdeskModule.HelpdeskService.CreateTicket(Ticket ticket) in C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModule\DAL\HelpdeskService.cs:line 68
+   at HelpdeskModuleTests.TicketTest.CreateTicketTest() in C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModuleTests\TicketTest.cs:line 83
+]]></stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

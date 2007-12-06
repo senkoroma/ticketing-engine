@@ -57,8 +57,6 @@ namespace HelpdeskModule
 				temp.Name = dr["name"].ToString();
 				temp.QueueId = QueueId;
 
-				//Do not load the tickets in this method...  a full load is reserved for another method.
-				temp.Tickets = null;
 			}
 			else { temp = null; }
 
@@ -164,7 +162,10 @@ namespace HelpdeskModule
 
 		#endregion
 
-		#region -------------  Tickets  -------------
+		#region -------------  Ticket  -------------
+
+		//TODO:  Write unit tests for Load ALL DATA... 
+		//TODO:  Write merge tickets logic.
 
 		public override void CreateTicket(Ticket ticket)
 		{
@@ -177,7 +178,10 @@ namespace HelpdeskModule
 					new SqlParameter("@Priority", ticket.Priority),
 					new SqlParameter("@TicketStatusId", ticket.Status.TicketStatusId),
 					new SqlParameter("@RequestorId", ticket.Requestor.RequestorId),
-					new SqlParameter("@CategoryId", ticket.Category.TicketCategoryId)
+					new SqlParameter("@TicketQueueId", ticket.Queue.QueueId),
+					new SqlParameter("@CategoryId", ticket.Category.TicketCategoryId),
+					new SqlParameter("@CompanyId", ticket.Company.CompanyId)
+
 					};
 
 			//Insert the records and set the status id.
@@ -186,78 +190,237 @@ namespace HelpdeskModule
 			Convert.ToInt32(
 				DBHelper.ExecScalarSQL(
 					@"INSERT INTO Ticket (module_id, category_id, creation_date, creator, description,
-						due_date, priority, status_id, requestor_id)
+						due_date, priority, status_id, requestor_id, queue_id, company_id)
 						VALUES (@TicketModuleId, @CategoryId, @CreationDate, @Creator, @Description, @DueDate, @Priority,
-							@TicketStatusId, @RequestorId); SELECT SCOPE_IDENTITY();",
+							@TicketStatusId, @RequestorId, @TicketQueueId, @CompanyId); SELECT SCOPE_IDENTITY();",
 					Params, CommandType.Text));
 		}
 
 		public override void UpdateTicket(Ticket ticket)
 		{
-			throw new Exception("The method or operation is not implemented.");
+			SqlParameter[] Params = new SqlParameter[] {
+					new SqlParameter("@TicketModuleId", ticket.Module.TicketModuleId),
+					new SqlParameter("@CreationDate", ticket.CreationDate),
+					new SqlParameter("@Creator", ticket.Creator),
+					new SqlParameter("@Description", ticket.Description),
+					new SqlParameter("@DueDate", ticket.DueDate),
+					new SqlParameter("@Priority", ticket.Priority),
+					new SqlParameter("@TicketStatusId", ticket.Status.TicketStatusId),
+					new SqlParameter("@RequestorId", ticket.Requestor.RequestorId),
+					new SqlParameter("@TicketQueueId", ticket.Queue.QueueId),
+					new SqlParameter("@CategoryId", ticket.Category.TicketCategoryId), 
+					new SqlParameter("@CompanyId", ticket.Company.CompanyId),
+					new SqlParameter("@TicketId", ticket.TicketId) 
+			};
+
+			DBHelper.ExecSQL(
+				@"UPDATE Ticket SET module_id = @TicketModuleId, creation_date = @CreationDate, 
+						creator = @Creator, description = @Description, priority = @Priority,
+						status_id = @TicketStatusId, requestor_id = @RequestorId, 
+						queue_id = @TicketQueueId, category_id = @CategoryId, company_id = @CompanyId
+					WHERE Ticket.ticket_id = @TicketId",
+					Params, CommandType.Text);
 		}
 
-		/// <summary>
-		/// Load Ticket Dat by the supplied ID.
-		/// </summary>
-		/// <param name="TicketId">Id of the requested ticket</param>
-		/// <param name="IsBasicDataOnly">If true, this will only load the id's of the associated classes.  If false, every object of the class will be loaded from SQLSERVER.</param>
-		/// <returns></returns>
 		public override Ticket GetTicket(int TicketId, bool IsBasicDataOnly)
 		{
+			string WhereArgs = String.Format("WHERE Ticket.ticket_id = {0}", TicketId);
+
 			//Based on whether or not the request is for all data, return the loaded ticket object.
-			return IsBasicDataOnly ? LoadBasicDataById(TicketId) : LoadAllDataById(TicketId);
+			return IsBasicDataOnly ? LoadBasicDataById(TicketId, WhereArgs, null) : LoadAllDataById(TicketId);
 		}
 
 		public override void DeleteTicket(int TicketId)
 		{
-			throw new Exception("The method or operation is not implemented.");
+			SqlParameter[] Params = new SqlParameter[] {
+					new SqlParameter("@TicketId", TicketId) 
+			};
+
+			DBHelper.ExecSQL(
+				@"DELETE FROM Ticket WHERE Ticket.ticket_id = @TicketId",
+					Params, CommandType.Text);
 		}
 
-		public override TicketCollection GetTicketsByQueueId(int QueueId)
+		public override TicketCollection GetTicketsByQueueId(int QueueId, bool IsBasicOnly)
 		{
-			throw new Exception("The method or operation is not implemented.");
+			string WhereArgs = String.Format("WHERE Ticket.queue_id = {0}", QueueId);
+
+			return IsBasicOnly ? LoadTicketCollectionBasicDataByArgs(WhereArgs, null) : LoadTicketCollectionAllDataByArgs(WhereArgs);
+
 		}
 
 		public override TicketCollection GetTicketsByAssignment(string user)
 		{
-			throw new Exception("The method or operation is not implemented.");
+			return new TicketCollection();
 		}
+
+		public override Ticket MergeTickets(int MasterTicketId, int SubordinateTicketId)
+		{
+			return new Ticket();
+		}
+
 
 		#region -------------  Private Ticket Helper Methods  -------------
 
-		private Ticket LoadAllDataById(int TicketId) { return new Ticket(); }
-
-		private Ticket LoadBasicDataById(int TicketId) 
+		private string BasicTicketSelectionText
 		{
-			SqlParameter[] Params = new SqlParameter[] { new SqlParameter("@TicketId", TicketId) };
-			DataSet ds = DBHelper.FillDataset(
-				@"	SELECT status_id, category_id, creation_date, creator, description, module_id,
-					requestor_id, priority, due_date
-					FROM Ticket
-					WHERE Ticket.ticket_id = @TicketId;",
-				Params, CommandType.Text);
+			get
+			{
+				return
+					@"
+
+						SELECT Ticket.ticket_id, Ticket.status_id, Ticket.category_id, Ticket.creation_date as TicketCreationDate, 
+							Ticket.creator as TicketCreator, Ticket.description as TicketDescription, Ticket.module_id, 
+							Ticket.requestor_id, Ticket.priority, Ticket.due_date, Ticket.queue_id as TicketQueueId, Ticket.company_id,
+
+							Category.[name] as CategoryName, Category.description as CategoryDescription, Category.queue_id as CategoryQueueId, Category.is_active as CategoryIsActive,
+
+							Status.[name] as StatusName, Status.description as StatusDescription, Status.status_order, Status.is_active as StatusIsActive,
+
+							Module.[name] as ModuleName, Module.description as ModuleDescription, Module.queue_id as ModuleQueueId, Module.is_active as ModuleIsActive,
+
+							Requestor.first_name, Requestor.last_name, Requestor.email, Requestor.contact_number,
+
+							Company.address1, Company.address2, Company.city, Company.contact_number1, Company.contact_number2, 
+							Company.main_contact_id, Company.name as CompanyName, Company.parent_id, Company.secondary_contact_id, Company.state, 
+							Company.website, Company.zip_code,
+
+							MainRequestor.first_name as MainFirstName, MainRequestor.last_name as MainLastName, 
+							MainRequestor.contact_number as MainContactNumber, MainRequestor.email as MainEmail,
+
+							SecondaryRequestor.first_name as SecFirstName, SecondaryRequestor.last_name as SecLastName,
+							SecondaryRequestor.contact_number as SecContactNumber, SecondaryRequestor.email as SecEmail,
+
+							[Queue].[name] as QueueName, [Queue].description as QueueDescription, [Queue].creation_date as QueueCreationDate, 
+							[Queue].creator as QueueCreator, [Queue].is_active as QueueIsActive
+
+						 FROM Ticket
+						
+						LEFT JOIN Company ON Company.company_id = Ticket.company_id
+						LEFT JOIN Category ON Category.ticket_category_id = Ticket.category_id
+						LEFT JOIN Status ON Status.status_id = Ticket.status_id
+						LEFT JOIN Module ON Module.module_id = Ticket.module_id
+						LEFT JOIN Requestor ON Requestor.requestor_id = Ticket.requestor_id
+						LEFT JOIN [Queue] ON [Queue].queue_id = Ticket.queue_id		
+						LEFT JOIN Requestor as MainRequestor ON MainRequestor.requestor_id = main_contact_id 
+						LEFT JOIN Requestor as SecondaryRequestor ON SecondaryRequestor.requestor_id = secondary_contact_id 
+		
+					
+					";
+			}
+		}
+
+		private Ticket LoadAllDataById(int TicketId)
+		{
+			return new Ticket();
+		}
+
+		private Ticket LoadBasicDataById(int TicketId, string WhereArgs, string OrderArgs)
+		{
+			SqlParameter[] Params = new SqlParameter[0];
+
+			//Appending a where clause to the basic query text so that it will allow for single selection.
+			DataSet ds = DBHelper.FillDataset(String.Format("{0} {1} {2}", BasicTicketSelectionText, WhereArgs, OrderArgs), Params, CommandType.Text);
 			Ticket temp;
 
 			if (DBHelper.DataSetHasRows(ds))
 			{
 				DataRow dr = ds.Tables[0].Rows[0];
 
+				//Basic Ticket Stuff
 				temp = new Ticket();
-				temp.Assignment = new AssignmentCollection();
-
-				TicketCategory cat = new TicketCategory();
-				temp.Category = new TicketCategory(Convert.ToInt32(dr["category_id"]));
-				temp.CreationDate = Convert.ToDateTime(dr["creation_date"]);
-				temp.Creator = dr["creator"].ToString();
-				temp.Description = dr["description"].ToString();
+				temp.CreationDate = Convert.ToDateTime(dr["TicketCreationDate"]);
 				temp.DueDate = Convert.ToDateTime(dr["due_date"]);
-				temp.Module = new TicketModule(Convert.ToInt32(dr["module_id"]));
 				temp.Priority = (TicketPriority)Convert.ToInt32(dr["priority"]);
-				temp.Requestor = new Requestor(Convert.ToInt32(dr["requestor_id"]));
-				temp.Responses = new TicketResponseCollection();
-				temp.Status = new TicketStatus(Convert.ToInt32(dr["status_id"]));
+				temp.Creator = dr["TicketCreator"].ToString();
+				temp.Description = dr["TicketDescription"].ToString();
 				temp.TicketId = TicketId;
+
+				//Complex non-collection objects...  load their values from the query...
+				temp.Category = new TicketCategory(
+					Convert.ToInt32(dr["category_id"]),
+					Convert.ToString(dr["CategoryName"]),
+					Convert.ToString(dr["CategoryDescription"]),
+					Convert.ToBoolean(dr["CategoryIsActive"]),
+					Convert.ToInt32(dr["CategoryQueueId"])
+					);
+
+				temp.Module = new TicketModule(
+					Convert.ToInt32(dr["module_id"]),
+					Convert.ToInt32(dr["ModuleQueueId"]),
+					Convert.ToString(dr["ModuleName"]),
+					Convert.ToString(dr["ModuleDescription"]),
+					Convert.ToBoolean(dr["ModuleIsActive"])
+					);
+
+				temp.Requestor = new Requestor(
+					Convert.ToInt32(dr["requestor_id"]),
+					Convert.ToString(dr["first_name"]),
+					Convert.ToString(dr["last_name"]),
+					Convert.ToString(dr["contact_number"]),
+					Convert.ToString(dr["email"])
+					);
+
+				temp.Status = new TicketStatus(
+					Convert.ToInt32(dr["status_id"]),
+					Convert.ToString(dr["StatusName"]),
+					Convert.ToString(dr["StatusDescription"]),
+					Convert.ToInt32(dr["status_order"]),
+					Convert.ToBoolean(dr["StatusIsActive"])
+					);
+
+				temp.Queue = new TicketQueue(
+					Convert.ToInt32(dr["TicketQueueId"]),
+					Convert.ToString(dr["QueueCreator"]),
+					Convert.ToString(dr["QueueDescription"]),
+					Convert.ToString(dr["QueueName"]),
+					Convert.ToDateTime(dr["QueueCreationDate"]),
+					Convert.ToBoolean(dr["QueueIsActive"])
+					);
+
+				temp.Company = new Company();
+				Requestor MainReq = new Requestor();
+				Requestor SecReq = new Requestor();
+
+
+
+				if (dr["company_id"].GetType() != typeof(DBNull) && Convert.ToInt32(dr["company_id"]) != 0)
+				{
+
+					temp.Company.Address1 = Convert.ToString(dr["address1"]);
+					temp.Company.Address2 = Convert.ToString(dr["address2"]);
+					temp.Company.City = Convert.ToString(dr["city"]);
+					temp.Company.CompanyId = Convert.ToInt32(dr["company_id"]);
+					temp.Company.ContactNumber1 = Convert.ToString(dr["contact_number1"]);
+					temp.Company.ContactNumber2 = Convert.ToString(dr["contact_number2"]);
+					temp.Company.Name = Convert.ToString(dr["CompanyName"]);
+					temp.Company.ParentId = Convert.ToInt32(dr["parent_id"]);
+					temp.Company.State = Convert.ToString(dr["state"]);
+					temp.Company.Website = Convert.ToString(dr["website"]);
+					temp.Company.Zip_Code = Convert.ToString(dr["zip_code"]);
+
+
+					MainReq.ContactNumber = Convert.ToString(dr["MainContactNumber"]);
+					MainReq.Email = Convert.ToString(dr["MainEmail"]);
+					MainReq.FirstName = Convert.ToString(dr["MainFirstName"]);
+					MainReq.LastName = Convert.ToString(dr["MainLastName"]);
+					MainReq.RequestorId = Convert.ToInt32(dr["main_contact_id"]);
+
+					SecReq.ContactNumber = Convert.ToString(dr["SecContactNumber"]);
+					SecReq.Email = Convert.ToString(dr["SecEmail"]);
+					SecReq.FirstName = Convert.ToString(dr["SecFirstName"]);
+					SecReq.LastName = Convert.ToString(dr["SecLastName"]);
+					SecReq.RequestorId = Convert.ToInt32(dr["secondary_contact_id"]);
+				}
+
+				temp.Company.MainContact = MainReq;
+				temp.Company.SecondaryContact = SecReq;
+
+				//Load the Collections as blank...  this is a simple query, we are not
+				//looking these values up right now.
+				temp.Assignment = new AssignmentCollection();
+				temp.Responses = new TicketResponseCollection();
+
 			}
 			else { temp = null; }
 
@@ -265,8 +428,126 @@ namespace HelpdeskModule
 
 		}
 
-		private TicketCollection LoadAllDataByArgs(string[] WhereArgs) { return new TicketCollection(); }
-		private TicketCollection LoadBasicDataByArgs(string[] WhereArgs) { return new TicketCollection(); }
+		private TicketCollection LoadTicketCollectionAllDataByArgs(string WhereArgs) { return new TicketCollection(); }
+
+		private TicketCollection LoadTicketCollectionBasicDataByArgs(string WhereArgs, string OrderArgs)
+		{
+			//Initialize an empty array.
+			SqlParameter[] tempParams = new SqlParameter[0];
+			DataSet tempDS = DBHelper.FillDataset(
+				String.Format("{0} {1} {2}", BasicTicketSelectionText, WhereArgs, OrderArgs),
+				tempParams, CommandType.Text);
+
+			TicketCollection resultSet = new TicketCollection();
+
+
+			//Make sure the dataset has rows, otherwise return an empty collection.
+			if (DBHelper.DataSetHasRows(tempDS))
+			{
+				foreach (DataRow dr in tempDS.Tables[0].Rows)
+				{
+					//Basic Ticket Stuff
+					Ticket temp = new Ticket();
+					temp.CreationDate = Convert.ToDateTime(dr["TicketCreationDate"]);
+					temp.DueDate = Convert.ToDateTime(dr["due_date"]);
+					temp.Priority = (TicketPriority)Convert.ToInt32(dr["priority"]);
+					temp.Creator = dr["TicketCreator"].ToString();
+					temp.Description = dr["TicketDescription"].ToString();
+					temp.TicketId = Convert.ToInt32(dr["ticket_id"]);
+
+					//Complex non-collection objects...  load their values from the query...
+					temp.Category = new TicketCategory(
+						Convert.ToInt32(dr["category_id"]),
+						Convert.ToString(dr["CategoryName"]),
+						Convert.ToString(dr["CategoryDescription"]),
+						Convert.ToBoolean(dr["CategoryIsActive"]),
+						Convert.ToInt32(dr["CategoryQueueId"])
+						);
+
+					temp.Module = new TicketModule(
+						Convert.ToInt32(dr["module_id"]),
+						Convert.ToInt32(dr["ModuleQueueId"]),
+						Convert.ToString(dr["ModuleName"]),
+						Convert.ToString(dr["ModuleDescription"]),
+						Convert.ToBoolean(dr["ModuleIsActive"])
+						);
+
+					temp.Requestor = new Requestor(
+						Convert.ToInt32(dr["requestor_id"]),
+						Convert.ToString(dr["first_name"]),
+						Convert.ToString(dr["last_name"]),
+						Convert.ToString(dr["contact_number"]),
+						Convert.ToString(dr["email"])
+						);
+
+					temp.Status = new TicketStatus(
+						Convert.ToInt32(dr["status_id"]),
+						Convert.ToString(dr["StatusName"]),
+						Convert.ToString(dr["StatusDescription"]),
+						Convert.ToInt32(dr["status_order"]),
+						Convert.ToBoolean(dr["StatusIsActive"])
+						);
+
+					temp.Queue = new TicketQueue(
+						Convert.ToInt32(dr["TicketQueueId"]),
+						Convert.ToString(dr["QueueCreator"]),
+						Convert.ToString(dr["QueueDescription"]),
+						Convert.ToString(dr["QueueName"]),
+						Convert.ToDateTime(dr["QueueCreationDate"]),
+						Convert.ToBoolean(dr["QueueIsActive"])
+						);
+
+					temp.Company = new Company();
+					Requestor MainReq = new Requestor();
+					Requestor SecReq = new Requestor();
+
+					if (dr["company_id"].GetType() != typeof(DBNull) && Convert.ToInt32(dr["company_id"]) != 0)
+					{
+
+
+						temp.Company.Address1 = Convert.ToString(dr["address1"]);
+						temp.Company.Address2 = Convert.ToString(dr["address2"]);
+						temp.Company.City = Convert.ToString(dr["city"]);
+						temp.Company.CompanyId = Convert.ToInt32(dr["company_id"]);
+						temp.Company.ContactNumber1 = Convert.ToString(dr["contact_number1"]);
+						temp.Company.ContactNumber2 = Convert.ToString(dr["contact_number2"]);
+						temp.Company.Name = Convert.ToString(dr["CompanyName"]);
+						temp.Company.ParentId = Convert.ToInt32(dr["parent_id"]);
+						temp.Company.State = Convert.ToString(dr["state"]);
+						temp.Company.Website = Convert.ToString(dr["website"]);
+						temp.Company.Zip_Code = Convert.ToString(dr["zip_code"]);
+
+						MainReq.ContactNumber = Convert.ToString(dr["MainContactNumber"]);
+						MainReq.Email = Convert.ToString(dr["MainEmail"]);
+						MainReq.FirstName = Convert.ToString(dr["MainFirstName"]);
+						MainReq.LastName = Convert.ToString(dr["MainLastName"]);
+						MainReq.RequestorId = Convert.ToInt32(dr["main_contact_id"]);
+
+
+						SecReq.ContactNumber = Convert.ToString(dr["SecContactNumber"]);
+						SecReq.Email = Convert.ToString(dr["SecEmail"]);
+						SecReq.FirstName = Convert.ToString(dr["SecFirstName"]);
+						SecReq.LastName = Convert.ToString(dr["SecLastName"]);
+						SecReq.RequestorId = Convert.ToInt32(dr["secondary_contact_id"]);
+
+					}
+
+					temp.Company.MainContact = MainReq;
+					temp.Company.SecondaryContact = SecReq;
+
+
+					//Load the Collections as blank...  this is a simple query, we are not
+					//looking these values up right now.
+					temp.Assignment = new AssignmentCollection();
+					temp.Responses = new TicketResponseCollection();
+
+					resultSet.Add(temp);
+				}
+			}
+			else { return null; }
+
+			return resultSet;
+		}
 
 		#endregion
 
@@ -277,27 +558,118 @@ namespace HelpdeskModule
 
 		public override void CreateResponse(TicketResponse response)
 		{
-			throw new Exception("The method or operation is not implemented.");
+			SqlParameter[] Params = new SqlParameter[] {
+					new SqlParameter("@TicketId", response.TicketId),
+					new SqlParameter("@MinsSpent", response.MinsSpent),
+					new SqlParameter("@Response", response.Response),
+					new SqlParameter("@CreationDate", response.CreationDate),
+					new SqlParameter("@Creator", response.Creator)
+					};
+
+			//Insert the records and set the status id.
+			response.TicketResponseId =
+
+			Convert.ToInt32(
+				DBHelper.ExecScalarSQL(
+					@"INSERT INTO Response (ticket_id, response, mins_spent, creation_date, creator)
+						VALUES (@TicketId, @Response, 
+						@MinsSpent, @CreationDate, @Creator); SELECT SCOPE_IDENTITY();",
+					Params, CommandType.Text));
+
 		}
 
 		public override void UpdateResponse(TicketResponse response)
 		{
-			throw new Exception("The method or operation is not implemented.");
+			SqlParameter[] Params = new SqlParameter[]
+			{
+					new SqlParameter("@TicketId", response.TicketId),
+					new SqlParameter("@MinsSpent", response.MinsSpent),
+					new SqlParameter("@Response", response.Response),
+					new SqlParameter("@CreationDate", response.CreationDate),
+					new SqlParameter("@Creator", response.Creator), 
+					new SqlParameter("@TicketResponseId", response.TicketResponseId), 
+			};
+			DBHelper.ExecSQL(
+				@"UPDATE Response 
+					SET ticket_id = @TicketId, mins_spent = @MinsSpent, response = @Response,
+					creation_date = @CreationDate, creator = @Creator
+					WHERE Response.ticket_response_id = @TicketResponseId",
+				Params, CommandType.Text);
 		}
 
 		public override TicketResponse GetResponse(int ResponseId)
 		{
-			throw new Exception("The method or operation is not implemented.");
+			SqlParameter[] Params = new SqlParameter[] { new SqlParameter("@ResponseId", ResponseId) };
+			DataSet ds = DBHelper.FillDataset(
+				@"	SELECT ticket_id, response, mins_spent, creation_date, creator
+					FROM Response
+					WHERE Response.ticket_response_id = @ResponseId;",
+				Params, CommandType.Text);
+			TicketResponse temp;
+
+			if (DBHelper.DataSetHasRows(ds))
+			{
+				DataRow dr = ds.Tables[0].Rows[0];
+
+				temp = new TicketResponse();
+				temp.CreationDate = Convert.ToDateTime(dr["creation_date"]);
+				temp.Creator = Convert.ToString(dr["creator"]);
+				temp.MinsSpent = Convert.ToInt32(dr["mins_spent"]);
+				temp.Response = Convert.ToString(dr["response"]);
+				temp.TicketId = Convert.ToInt32(dr["ticket_id"]);
+				temp.TicketResponseId = ResponseId;
+			}
+			else { temp = null; }
+
+			return temp;
 		}
 
 		public override void DeleteResponse(int ResponseId)
 		{
-			throw new Exception("The method or operation is not implemented.");
+			SqlParameter[] Params = new SqlParameter[] {
+					new SqlParameter("@ResponseId", ResponseId) 
+			};
+
+			DBHelper.ExecSQL(
+				@"DELETE FROM Response WHERE Response.ticket_response_id = @ResponseId",
+					Params, CommandType.Text);
 		}
 
 		public override TicketResponseCollection GetResponsesByTicketId(int TicketId)
 		{
-			throw new Exception("The method or operation is not implemented.");
+			SqlParameter[] Params = new SqlParameter[] { new SqlParameter("@TicketId", TicketId) };
+
+			//Fill the dataset w/ records that have the right QueueId
+			DataSet ds = DBHelper.FillDataset(
+				@"SELECT response, mins_spent, creation_date, creator, ticket_response_id
+					FROM Response
+					WHERE Response.ticket_id = @TicketId;",
+					Params, CommandType.Text);
+
+			TicketResponseCollection temp;
+
+			//If it has rows, populate the collection, otherwise return null.
+			if (DBHelper.DataSetHasRows(ds))
+			{
+				temp = new TicketResponseCollection();
+
+				foreach (DataRow dr in ds.Tables[0].Rows)
+				{
+					TicketResponse tempRep = new TicketResponse();
+					tempRep.CreationDate = Convert.ToDateTime(dr["creation_date"]);
+					tempRep.Creator = Convert.ToString(dr["creator"]);
+					tempRep.MinsSpent = Convert.ToInt32(dr["mins_spent"]);
+					tempRep.Response = Convert.ToString(dr["response"]);
+					tempRep.TicketId = TicketId;
+					tempRep.TicketResponseId = Convert.ToInt32(dr["ticket_response_id"]);
+
+					//Add to the collection!
+					temp.Add(tempRep);
+				}
+			}
+			else { temp = null; }
+
+			return temp;
 		}
 
 		#endregion
@@ -1082,5 +1454,133 @@ namespace HelpdeskModule
 		}
 
 		#endregion
+
+		#region ------------- Company  -------------
+
+		public override void CreateCompany(Company company)
+		{
+			SqlParameter[] Params = new SqlParameter[] {
+                    new SqlParameter("@Address1", company.Address1),
+                    new SqlParameter("@Address2", company.Address2),
+                    new SqlParameter("@City", company.City),
+                    new SqlParameter("@ContactNumber1", company.ContactNumber1),
+                    new SqlParameter("@ContactNumber2", company.ContactNumber2),
+                    new SqlParameter("@MainContact", company.MainContact.RequestorId),
+                    new SqlParameter("@Name", company.Name),
+                    new SqlParameter("@ParentId", company.ParentId),
+                    new SqlParameter("@SecondaryContact", company.SecondaryContact.RequestorId),
+                    new SqlParameter("@State", company.State),
+                    new SqlParameter("@Website", company.Website),
+                    new SqlParameter("@ZipCode", company.Zip_Code)
+                    };
+
+			//Insert the records and set the status id.
+			company.CompanyId =
+
+			Convert.ToInt32(
+				DBHelper.ExecScalarSQL(
+					@"INSERT INTO Company (address1, address2, city, contact_number1, contact_number2, main_contact_id,
+							name, parent_id, secondary_contact_id, state, website, zip_code)
+						VALUES (@Address1, @Address2, @City, @ContactNumber1, @ContactNumber2, @MainContact,
+								@Name, @ParentId, @SecondaryContact, @State, @Website, @ZipCode); SELECT SCOPE_IDENTITY();",
+				   Params, CommandType.Text));
+
+		}
+
+		public override void UpdateCompany(Company company)
+		{
+			SqlParameter[] Params = new SqlParameter[]
+			{
+                    new SqlParameter("@Address1", company.Address1),
+                    new SqlParameter("@Address2", company.Address2),
+                    new SqlParameter("@City", company.City),
+                    new SqlParameter("@ContactNumber1", company.ContactNumber1),
+                    new SqlParameter("@ContactNumber2", company.ContactNumber2),
+                    new SqlParameter("@MainContact", company.MainContact.RequestorId),
+                    new SqlParameter("@Name", company.Name),
+                    new SqlParameter("@ParentId", company.ParentId),
+                    new SqlParameter("@SecondaryContact", company.SecondaryContact.RequestorId),
+                    new SqlParameter("@State", company.State),
+                    new SqlParameter("@Website", company.Website),
+                    new SqlParameter("@ZipCode", company.Zip_Code),
+                    new SqlParameter("@CompanyId", company.CompanyId)
+
+			};
+			DBHelper.ExecSQL(
+				@"UPDATE Company 
+					SET address1 = @Address1, address2 = @Address2, city = @City, contact_number1 = @ContactNumber1,
+						contact_number2 = @ContactNumber2, main_contact_id = @MainContact,
+							name = @Name, parent_id = @ParentId, secondary_contact_id = @SecondaryContact,
+							state = @State, website = @Website, zip_code = @ZipCode
+					WHERE Company.company_id = @CompanyId;",
+				Params, CommandType.Text);
+
+		}
+
+		public override Company GetCompanyById(int CompanyId)
+		{
+			SqlParameter[] Params = new SqlParameter[] { new SqlParameter("@CompanyId", CompanyId) };
+			DataSet ds = DBHelper.FillDataset(
+				@"	SELECT address1, address2, city, contact_number1, contact_number2, main_contact_id,
+					name, parent_id, secondary_contact_id, state, website, zip_code,
+
+					MainRequestor.first_name as MainFirstName, MainRequestor.last_name as MainLastName, 
+					MainRequestor.contact_number as MainContactNumber, MainRequestor.email as MainEmail,
+
+					SecondaryRequestor.first_name as SecFirstName, SecondaryRequestor.last_name as SecLastName,
+					SecondaryRequestor.contact_number as SecContactNumber, SecondaryRequestor.email as SecEmail
+
+					FROM Company
+					LEFT JOIN Requestor as MainRequestor ON MainRequestor.requestor_id = main_contact_id 
+					LEFT JOIN Requestor as SecondaryRequestor ON SecondaryRequestor.requestor_id = secondary_contact_id 
+
+					WHERE Company.company_id = @CompanyId;",
+				Params, CommandType.Text);
+			Company temp;
+
+			if (DBHelper.DataSetHasRows(ds))
+			{
+				DataRow dr = ds.Tables[0].Rows[0];
+
+				temp = new Company();
+				temp.Address1 = Convert.ToString(dr["address1"]);
+				temp.Address2 = Convert.ToString(dr["address2"]);
+				temp.City = Convert.ToString(dr["city"]);
+				temp.CompanyId = CompanyId;
+				temp.ContactNumber1 = Convert.ToString(dr["contact_number1"]);
+				temp.ContactNumber2 = Convert.ToString(dr["contact_number2"]);
+				temp.Name = Convert.ToString(dr["name"]);
+				temp.ParentId = Convert.ToInt32(dr["parent_id"]);
+				temp.State = Convert.ToString(dr["state"]);
+				temp.Website = Convert.ToString(dr["website"]);
+				temp.Zip_Code = Convert.ToString(dr["zip_code"]);
+
+				//Set up the complex objects...
+
+				Requestor MainReq = new Requestor();
+				MainReq.ContactNumber = Convert.ToString(dr["MainContactNumber"]);
+				MainReq.Email = Convert.ToString(dr["MainEmail"]);
+				MainReq.FirstName = Convert.ToString(dr["MainFirstName"]);
+				MainReq.LastName = Convert.ToString(dr["MainLastName"]);
+				MainReq.RequestorId = Convert.ToInt32(dr["main_contact_id"]);
+
+				temp.MainContact = MainReq;
+
+				Requestor SecReq = new Requestor();
+				SecReq.ContactNumber = Convert.ToString(dr["SecContactNumber"]);
+				SecReq.Email = Convert.ToString(dr["SecEmail"]);
+				SecReq.FirstName = Convert.ToString(dr["SecFirstName"]);
+				SecReq.LastName = Convert.ToString(dr["SecLastName"]);
+				SecReq.RequestorId = Convert.ToInt32(dr["secondary_contact_id"]);
+
+				temp.SecondaryContact = SecReq;
+			}
+			else { temp = null; }
+
+			return temp;
+		}
+
+		#endregion
+
 	}
 }

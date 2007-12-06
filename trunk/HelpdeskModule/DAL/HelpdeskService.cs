@@ -73,9 +73,11 @@ namespace HelpdeskModule
 
 		public static void DeleteTicket(int TicketId) { LoadProviders(); _provider.DeleteTicket(TicketId); }
 
-		public static TicketCollection GetTicketsByQueueId(int QueueId) { LoadProviders(); return _provider.GetTicketsByQueueId(QueueId); }
+		public static TicketCollection GetTicketsByQueueId(int QueueId, bool IsBasicOnly) { LoadProviders(); return _provider.GetTicketsByQueueId(QueueId, IsBasicOnly); }
 
 		public static TicketCollection GetTicketsByAssignment(string user) { LoadProviders(); return _provider.GetTicketsByAssignment(user); }
+
+		public static Ticket MergeTickets(int MasterTicketId, int SubordinateTicketId) { LoadProviders(); return _provider.MergeTickets(MasterTicketId, SubordinateTicketId); }
 
 		#endregion
 
@@ -130,7 +132,7 @@ namespace HelpdeskModule
 		public static void EditStatus(TicketStatus status) { LoadProviders(); _provider.EditStatus(status); }
 
 		public static TicketStatus GetStatusById(int TicketStatusId) { LoadProviders(); return _provider.GetStatusById(TicketStatusId); }
-		
+
 		public static TicketStatusCollection GetAllStatus() { LoadProviders(); return _provider.GetAllStatus(); }
 
 		#endregion
@@ -141,8 +143,8 @@ namespace HelpdeskModule
 
 		public static void EditCategory(TicketCategory category) { LoadProviders(); _provider.EditCategory(category); }
 
-		public static TicketCategory GetCategoryById(int TicketCategoryid) { LoadProviders(); return _provider.GetCategoryById(TicketCategoryid);}
-		
+		public static TicketCategory GetCategoryById(int TicketCategoryid) { LoadProviders(); return _provider.GetCategoryById(TicketCategoryid); }
+
 		public static TicketCategoryCollection GetAllCategory() { LoadProviders(); return _provider.GetAllCategory(); }
 
 		#endregion
@@ -173,6 +175,15 @@ namespace HelpdeskModule
 
 		#endregion
 
+		#region ------------- Company  -------------
+
+		public static void CreateCompany(Company company) { LoadProviders(); _provider.CreateCompany(company); }
+
+		public static void UpdateCompany(Company company) { LoadProviders(); _provider.UpdateCompany(company); }
+
+		public static Company GetCompanyById(int CompanyId) { LoadProviders(); return _provider.GetCompanyById(CompanyId); }
+
+		#endregion
 
 		#endregion
 

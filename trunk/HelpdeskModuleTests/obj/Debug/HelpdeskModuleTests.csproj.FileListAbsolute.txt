@@ -7,3 +7,12 @@ C:\Documents and Settings\blevinsn\My Documents\Visual Studio 2005\Projects\Help
 C:\Documents and Settings\blevinsn\My Documents\Visual Studio 2005\Projects\Helpdesk\HelpdeskModuleTests\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\blevinsn\My Documents\Visual Studio 2005\Projects\Helpdesk\HelpdeskModuleTests\obj\Debug\HelpdeskModuleTests.dll
 C:\Documents and Settings\blevinsn\My Documents\Visual Studio 2005\Projects\Helpdesk\HelpdeskModuleTests\obj\Debug\HelpdeskModuleTests.pdb
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModuleTests\bin\Debug\HelpdeskModuleTests.dll
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModuleTests\bin\Debug\HelpdeskModuleTests.pdb
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModuleTests\bin\Debug\HelpdeskModule.dll
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModuleTests\bin\Debug\nunit.framework.dll
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModuleTests\bin\Debug\nunit.framework.xml
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModuleTests\bin\Debug\HelpdeskModule.pdb
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModuleTests\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModuleTests\obj\Debug\HelpdeskModuleTests.dll
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModuleTests\obj\Debug\HelpdeskModuleTests.pdb

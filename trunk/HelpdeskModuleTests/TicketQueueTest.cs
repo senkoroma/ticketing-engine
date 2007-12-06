@@ -30,7 +30,6 @@ namespace HelpdeskModuleTests
 			expected.Description = "This is my testing description of this Queue.";
 			expected.IsActive = true;
 			expected.Name = "Testing Queue";
-			expected.Tickets = null;
 
 			return expected;
 		}
@@ -86,7 +85,6 @@ namespace HelpdeskModuleTests
 			temp.Name = "Testing Queue2";
 			temp.Description = "New Description";
 			temp.IsActive = false;
-			temp.Tickets = null;
 			temp.Creator = "blevinsn";
 			temp.CreationDate = DateTime.Now;
 

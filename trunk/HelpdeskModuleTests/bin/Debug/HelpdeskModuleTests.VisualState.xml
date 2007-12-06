@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1039]C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModuleTests\bin\Debug\HelpdeskModuleTests.dll</TopNode>
+  <SelectedNode>[0-1033]HelpdeskModuleTests.AssignmentTest</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1039]C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModuleTests\bin\Debug\HelpdeskModuleTests.dll" Expanded="true">
+      <Nodes>
+        <Node UniqueName="[0-1040]HelpdeskModuleTests" Expanded="true">
+          <Nodes>
+            <Node UniqueName="[0-1000]HelpdeskModuleTests.AbstractDaoTest" />
+            <Node UniqueName="[0-1033]HelpdeskModuleTests.AssignmentTest" Expanded="true">
+              <Nodes>
+                <Node UniqueName="[0-1034]HelpdeskModuleTests.AssignmentTest.CreateAssignmentTest" />
+                <Node UniqueName="[0-1036]HelpdeskModuleTests.AssignmentTest.GetAssignmentsByTicketIdTest" />
+                <Node UniqueName="[0-1038]HelpdeskModuleTests.AssignmentTest.GetAssignmentsByUserAndActiveTest" />
+                <Node UniqueName="[0-1037]HelpdeskModuleTests.AssignmentTest.GetAssignmentsByUserTest" />
+                <Node UniqueName="[0-1035]HelpdeskModuleTests.AssignmentTest.UpdateAssignmentTest" />
+              </Nodes>
+            </Node>
+            <Node UniqueName="[0-1026]HelpdeskModuleTests.ChargeCodeTest" Expanded="true">
+              <Nodes>
+                <Node UniqueName="[0-1027]HelpdeskModuleTests.ChargeCodeTest.CreateModuleTest" />
+                <Node UniqueName="[0-1028]HelpdeskModuleTests.ChargeCodeTest.EditModuleTest" />
+                <Node UniqueName="[0-1029]HelpdeskModuleTests.ChargeCodeTest.GetAllChargeCodeTest" />
+                <Node UniqueName="[0-1030]HelpdeskModuleTests.ChargeCodeTest.GetChargeCodeByActiveTest" />
+              </Nodes>
+            </Node>
+            <Node UniqueName="[0-1006]HelpdeskModuleTests.RequestorTest" Expanded="true">
+              <Nodes>
+                <Node UniqueName="[0-1007]HelpdeskModuleTests.RequestorTest.CreateRequestorTest" />
+                <Node UniqueName="[0-1008]HelpdeskModuleTests.RequestorTest.EditRequestorTest" />
+                <Node UniqueName="[0-1009]HelpdeskModuleTests.RequestorTest.GetAllRequestorTest" />
+              </Nodes>
+            </Node>
+            <Node UniqueName="[0-1010]HelpdeskModuleTests.TicketCategoryTest" Expanded="true">
+              <Nodes>
+                <Node UniqueName="[0-1011]HelpdeskModuleTests.TicketCategoryTest.CreateCategoryTest" />
+                <Node UniqueName="[0-1012]HelpdeskModuleTests.TicketCategoryTest.EditCategoryTest" />
+                <Node UniqueName="[0-1013]HelpdeskModuleTests.TicketCategoryTest.GetAllCategoryTest" />
+              </Nodes>
+            </Node>
+            <Node UniqueName="[0-1001]HelpdeskModuleTests.TicketModuleTest" Expanded="true">
+              <Nodes>
+                <Node UniqueName="[0-1002]HelpdeskModuleTests.TicketModuleTest.CreateModuleTest" />
+                <Node UniqueName="[0-1003]HelpdeskModuleTests.TicketModuleTest.EditModuleTest" />
+                <Node UniqueName="[0-1004]HelpdeskModuleTests.TicketModuleTest.GetAllModulesTest" />
+                <Node UniqueName="[0-1005]HelpdeskModuleTests.TicketModuleTest.GetModulesByQueueIdTest" />
+              </Nodes>
+            </Node>
+            <Node UniqueName="[0-1020]HelpdeskModuleTests.TicketQueueTest" Expanded="true">
+              <Nodes>
+                <Node UniqueName="[0-1021]HelpdeskModuleTests.TicketQueueTest.CreateQueueTest" />
+                <Node UniqueName="[0-1023]HelpdeskModuleTests.TicketQueueTest.DeleteQueueTest" />
+                <Node UniqueName="[0-1025]HelpdeskModuleTests.TicketQueueTest.GetAllEnabledQueuesTest" />
+                <Node UniqueName="[0-1024]HelpdeskModuleTests.TicketQueueTest.GetAllQueuesTest" />
+                <Node UniqueName="[0-1022]HelpdeskModuleTests.TicketQueueTest.UpdateQueueTest" />
+              </Nodes>
+            </Node>
+            <Node UniqueName="[0-1014]HelpdeskModuleTests.TicketStatusTest" Expanded="true">
+              <Nodes>
+                <Node UniqueName="[0-1015]HelpdeskModuleTests.TicketStatusTest.CreateStatusTest" />
+                <Node UniqueName="[0-1016]HelpdeskModuleTests.TicketStatusTest.EditStatusTest" />
+                <Node UniqueName="[0-1017]HelpdeskModuleTests.TicketStatusTest.GetAllStatusTest" />
+                <Node UniqueName="[0-1019]HelpdeskModuleTests.TicketStatusTest.SortOnMiddleRequestedOrder" />
+                <Node UniqueName="[0-1018]HelpdeskModuleTests.TicketStatusTest.SortOnTooLargeRequestedOrder" />
+              </Nodes>
+            </Node>
+            <Node UniqueName="[0-1031]HelpdeskModuleTests.TicketTest" Expanded="true">
+              <Nodes>
+                <Node UniqueName="[0-1032]HelpdeskModuleTests.TicketTest.CreateTicketTest" />
+              </Nodes>
+            </Node>
+          </Nodes>
+        </Node>
+      </Nodes>
+    </Node>
+  </Nodes>
+</VisualState>

@@ -3,3 +3,8 @@ C:\Documents and Settings\blevinsn\My Documents\Visual Studio 2005\Projects\Help
 C:\Documents and Settings\blevinsn\My Documents\Visual Studio 2005\Projects\Helpdesk\HelpdeskModule\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\blevinsn\My Documents\Visual Studio 2005\Projects\Helpdesk\HelpdeskModule\obj\Debug\HelpdeskModule.dll
 C:\Documents and Settings\blevinsn\My Documents\Visual Studio 2005\Projects\Helpdesk\HelpdeskModule\obj\Debug\HelpdeskModule.pdb
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModule\bin\Debug\HelpdeskModule.dll
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModule\bin\Debug\HelpdeskModule.pdb
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModule\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModule\obj\Debug\HelpdeskModule.dll
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskModule\obj\Debug\HelpdeskModule.pdb

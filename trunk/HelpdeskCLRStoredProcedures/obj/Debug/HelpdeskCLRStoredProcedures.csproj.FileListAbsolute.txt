@@ -3,3 +3,8 @@ C:\Documents and Settings\blevinsn\My Documents\Visual Studio 2005\Projects\Help
 C:\Documents and Settings\blevinsn\My Documents\Visual Studio 2005\Projects\Helpdesk\HelpdeskCLRStoredProcedures\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\blevinsn\My Documents\Visual Studio 2005\Projects\Helpdesk\HelpdeskCLRStoredProcedures\obj\Debug\HelpdeskCLRStoredProcedures.dll
 C:\Documents and Settings\blevinsn\My Documents\Visual Studio 2005\Projects\Helpdesk\HelpdeskCLRStoredProcedures\obj\Debug\HelpdeskCLRStoredProcedures.pdb
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskCLRStoredProcedures\bin\Debug\HelpdeskCLRStoredProcedures.dll
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskCLRStoredProcedures\bin\Debug\HelpdeskCLRStoredProcedures.pdb
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskCLRStoredProcedures\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskCLRStoredProcedures\obj\Debug\HelpdeskCLRStoredProcedures.dll
+C:\Documents and Settings\blevinsn\My Documents\Projects\Helpdesk\HelpdeskCLRStoredProcedures\obj\Debug\HelpdeskCLRStoredProcedures.pdb

@@ -50,6 +50,9 @@ namespace HelpdeskModule
 
 		#endregion
 
+		#region  ---------------  Constructors  ---------------
+
+
 		/// <summary>
 		/// Basic constuctor.
 		/// </summary>
@@ -61,6 +64,18 @@ namespace HelpdeskModule
 		{
 			_TicketStatusId = uTicketStatusId;
 		}
+
+		public TicketStatus(int uTicketStatusId, string uName, string uDescription,
+			int uStatusOrder, bool uIsActive)
+		{
+			_TicketStatusId = uTicketStatusId;
+			_Description = uDescription;
+			_IsActive = uIsActive;
+			_Name = uName;
+			_StatusOrder = uStatusOrder;
+		}
+
+		#endregion
 
 		#region IEquatable<TicketStatus> Members
 
